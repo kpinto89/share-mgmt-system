@@ -71,6 +71,14 @@ body {
     font-weight: 700;
 }
 
+.gain {
+    color: #047857;
+}
+
+.loss {
+    color: #b91c1c;
+}
+
 table {
     border-collapse: collapse;
     width: 100%;

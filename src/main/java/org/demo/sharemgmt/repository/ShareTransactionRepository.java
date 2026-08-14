@@ -18,4 +18,7 @@ public interface ShareTransactionRepository extends JpaRepository<ShareTransacti
 
     @EntityGraph(attributePaths = "shareholder")
     List<ShareTransaction> findByShareholderIdAndSymbolIgnoreCaseOrderByTransactionDateAscIdAsc(Long shareholderId, String symbol);
+
+    @EntityGraph(attributePaths = "shareholder")
+    ShareTransaction findFirstBySymbolIgnoreCaseOrderByTransactionDateDescIdDesc(String symbol);
 }

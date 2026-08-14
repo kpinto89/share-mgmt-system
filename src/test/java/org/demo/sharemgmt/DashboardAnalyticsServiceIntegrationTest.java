@@ -9,10 +9,12 @@ import org.demo.sharemgmt.domain.TransactionType;
 import org.demo.sharemgmt.repository.ShareTransactionRepository;
 import org.demo.sharemgmt.repository.ShareholderRepository;
 import org.demo.sharemgmt.service.DashboardAnalyticsService;
+import org.demo.sharemgmt.service.PortfolioService;
 import org.demo.sharemgmt.service.ShareTransactionService;
 import org.demo.sharemgmt.service.model.ChartBarItem;
 import org.demo.sharemgmt.service.model.ChartColumnItem;
 import org.demo.sharemgmt.service.model.DashboardAnalytics;
+import org.demo.sharemgmt.service.model.PortfolioView;
 import org.demo.sharemgmt.web.form.ShareTransactionForm;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,6 +37,9 @@ class DashboardAnalyticsServiceIntegrationTest {
 
     @Autowired
     private DashboardAnalyticsService dashboardAnalyticsService;
+
+    @Autowired
+    private PortfolioService portfolioService;
 
     @BeforeEach
     void setUp() {
@@ -60,6 +65,12 @@ class DashboardAnalyticsServiceIntegrationTest {
         assertEquals(List.of("INR 1930.00", "INR 1000.00"), displayValues(analytics.getInvestmentByShareholder()));
         assertEquals(List.of("10 Aug", "11 Aug", "12 Aug"), activityLabels(analytics.getTransactionActivity()));
         assertEquals(List.of(1, 2, 1), activityCounts(analytics.getTransactionActivity()));
+
+        PortfolioView portfolio = portfolioService.getPortfolioView();
+        assertEquals(17, portfolio.getSummary().getTotalShares());
+        assertEquals(new BigDecimal("2450.00"), portfolio.getSummary().getInvestedAmount());
+        assertEquals(new BigDecimal("48245.00"), portfolio.getSummary().getMarketValue());
+        assertEquals(new BigDecimal("45795.00"), portfolio.getSummary().getGainLoss());
     }
 
     private List<String> labels(List<ChartBarItem> items) {

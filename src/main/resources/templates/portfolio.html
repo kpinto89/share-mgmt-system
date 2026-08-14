@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Portfolio</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<header class="nav">
+    <div><strong>Share Management System</strong></div>
+    <nav class="nav-links">
+        <a th:href="@{/}">Dashboard</a>
+        <a th:href="@{/portfolio}">Portfolio</a>
+        <a th:href="@{/shareholders}">Shareholders</a>
+        <a th:href="@{/transactions}">Transactions</a>
+        <span class="nav-user" th:if="${userAuthenticated}" th:text="${currentUserDisplayName}">System Administrator</span>
+        <form th:if="${userAuthenticated}" th:action="@{/logout}" method="post" class="inline-form">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <button type="submit" class="link-button">Logout</button>
+        </form>
+    </nav>
+</header>
+
+<main class="container">
+    <section class="grid cards">
+        <div class="card">
+            <div class="metric">Total Shares</div>
+            <div class="metric-value" th:text="${portfolio.summary.totalShares}">0</div>
+        </div>
+        <div class="card">
+            <div class="metric">Invested Amount</div>
+            <div class="metric-value" th:text="${'INR ' + #numbers.formatDecimal(portfolio.summary.investedAmount, 1, 'COMMA', 2, 'POINT')}">INR 0.00</div>
+        </div>
+        <div class="card">
+            <div class="metric">Market Value</div>
+            <div class="metric-value" th:text="${'INR ' + #numbers.formatDecimal(portfolio.summary.marketValue, 1, 'COMMA', 2, 'POINT')}">INR 0.00</div>
+        </div>
+        <div class="card">
+            <div class="metric">Gain / Loss</div>
+            <div class="metric-value" th:classappend="${portfolio.summary.gainLoss.signum() >= 0} ? 'gain' : 'loss'" th:text="${'INR ' + #numbers.formatDecimal(portfolio.summary.gainLoss, 1, 'COMMA', 2, 'POINT')}">INR 0.00</div>
+        </div>
+    </section>
+
+    <section class="grid two-column" style="margin-top: 20px;">
+        <div class="card">
+            <h2>Allocation by Symbol</h2>
+            <div class="chart-list">
+                <div class="chart-row" th:each="item : ${portfolio.allocationBySymbol}">
+                    <div class="chart-label-group">
+                        <span class="chart-label" th:text="${item.label}">TCS</span>
+                        <span class="chart-value" th:text="${item.displayValue}">INR 0.00</span>
+                    </div>
+                    <div class="chart-track">
+                        <div class="chart-fill symbol-fill" th:style="'width:' + ${item.percentage} + '%'"></div>
+                    </div>
+                </div>
+                <p class="muted" th:if="${#lists.isEmpty(portfolio.allocationBySymbol)}">No positions available.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Allocation by Shareholder</h2>
+            <div class="chart-list">
+                <div class="chart-row" th:each="item : ${portfolio.allocationByShareholder}">
+                    <div class="chart-label-group">
+                        <span class="chart-label" th:text="${item.label}">Anika Sharma</span>
+                        <span class="chart-value" th:text="${item.displayValue}">INR 0.00</span>
+                    </div>
+                    <div class="chart-track">
+                        <div class="chart-fill investment-fill" th:style="'width:' + ${item.percentage} + '%'"></div>
+                    </div>
+                </div>
+                <p class="muted" th:if="${#lists.isEmpty(portfolio.allocationByShareholder)}">No positions available.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="card" style="margin-top: 20px;">
+        <h2>Portfolio Positions</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Shareholder</th>
+                <th>Symbol</th>
+                <th>Qty</th>
+                <th>Current Price</th>
+                <th>Invested</th>
+                <th>Market Value</th>
+                <th>Gain / Loss</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="position : ${portfolio.positions}">
+                <td th:text="${position.shareholderName}">Anika Sharma</td>
+                <td><span class="badge" th:text="${position.symbol}">TCS</span></td>
+                <td th:text="${position.quantity}">20</td>
+                <td th:text="${'INR ' + #numbers.formatDecimal(position.currentPrice, 1, 'COMMA', 2, 'POINT')}">INR 0.00</td>
+                <td th:text="${'INR ' + #numbers.formatDecimal(position.investedAmount, 1, 'COMMA', 2, 'POINT')}">INR 0.00</td>
+                <td th:text="${'INR ' + #numbers.formatDecimal(position.marketValue, 1, 'COMMA', 2, 'POINT')}">INR 0.00</td>
+                <td th:classappend="${position.gainLoss.signum() >= 0} ? 'gain' : 'loss'" th:text="${'INR ' + #numbers.formatDecimal(position.gainLoss, 1, 'COMMA', 2, 'POINT')}">INR 0.00</td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(portfolio.positions)}">
+                <td colspan="7">No active positions yet.</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+</body>
+</html>

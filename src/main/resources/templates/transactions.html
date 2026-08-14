@@ -10,6 +10,7 @@
     <div><strong>Share Management System</strong></div>
     <nav class="nav-links">
         <a th:href="@{/}">Dashboard</a>
+        <a th:href="@{/portfolio}">Portfolio</a>
         <a th:href="@{/shareholders}">Shareholders</a>
         <a th:href="@{/transactions}">Transactions</a>
         <span class="nav-user" th:if="${userAuthenticated}" th:text="${currentUserDisplayName}">System Administrator</span>
