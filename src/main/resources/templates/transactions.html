@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Transactions</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<header class="nav">
+    <div><strong>Share Management System</strong></div>
+    <nav>
+        <a th:href="@{/}">Dashboard</a>
+        <a th:href="@{/shareholders}">Shareholders</a>
+        <a th:href="@{/transactions}">Transactions</a>
+    </nav>
+</header>
+
+<main class="container grid two-column">
+    <section class="card">
+        <h2>Record Transaction</h2>
+        <div class="error" th:if="${serviceError}" th:text="${serviceError}"></div>
+        <form th:action="@{/transactions}" th:object="${transactionForm}" method="post">
+            <div>
+                <label for="shareholderId">Shareholder</label>
+                <select id="shareholderId" th:field="*{shareholderId}">
+                    <option value="">Select shareholder</option>
+                    <option th:each="shareholder : ${shareholders}" th:value="${shareholder.id}" th:text="${shareholder.name}"></option>
+                </select>
+                <div class="error" th:if="${#fields.hasErrors('shareholderId')}" th:errors="*{shareholderId}"></div>
+            </div>
+            <div>
+                <label for="symbol">Symbol</label>
+                <input id="symbol" type="text" th:field="*{symbol}">
+                <div class="error" th:if="${#fields.hasErrors('symbol')}" th:errors="*{symbol}"></div>
+            </div>
+            <div>
+                <label for="transactionType">Transaction Type</label>
+                <select id="transactionType" th:field="*{transactionType}">
+                    <option th:each="type : ${transactionTypes}" th:value="${type}" th:text="${type}"></option>
+                </select>
+                <div class="error" th:if="${#fields.hasErrors('transactionType')}" th:errors="*{transactionType}"></div>
+            </div>
+            <div>
+                <label for="quantity">Quantity</label>
+                <input id="quantity" type="number" min="1" th:field="*{quantity}">
+                <div class="error" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></div>
+            </div>
+            <div>
+                <label for="pricePerShare">Price Per Share</label>
+                <input id="pricePerShare" type="number" min="0.01" step="0.01" th:field="*{pricePerShare}">
+                <div class="error" th:if="${#fields.hasErrors('pricePerShare')}" th:errors="*{pricePerShare}"></div>
+            </div>
+            <div>
+                <label for="transactionDate">Transaction Date</label>
+                <input id="transactionDate" type="date" th:field="*{transactionDate}">
+                <div class="error" th:if="${#fields.hasErrors('transactionDate')}" th:errors="*{transactionDate}"></div>
+            </div>
+            <button type="submit">Save Transaction</button>
+        </form>
+    </section>
+
+    <section class="card">
+        <h2>Transaction Ledger</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>Shareholder</th>
+                <th>Type</th>
+                <th>Symbol</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="transaction : ${transactions}">
+                <td th:text="${transaction.transactionDate}">2026-08-14</td>
+                <td th:text="${transaction.shareholder.name}">Anika Sharma</td>
+                <td th:text="${transaction.transactionType}">BUY</td>
+                <td th:text="${transaction.symbol}">TCS</td>
+                <td th:text="${transaction.quantity}">25</td>
+                <td th:text="${'INR ' + #numbers.formatDecimal(transaction.pricePerShare, 1, 'COMMA', 2, 'POINT')}">INR 0.00</td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(transactions)}">
+                <td colspan="6">No transactions yet.</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+</body>
+</html>

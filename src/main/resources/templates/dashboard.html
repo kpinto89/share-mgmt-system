@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Share Management Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<header class="nav">
+    <div><strong>Share Management System</strong></div>
+    <nav>
+        <a th:href="@{/}">Dashboard</a>
+        <a th:href="@{/shareholders}">Shareholders</a>
+        <a th:href="@{/transactions}">Transactions</a>
+    </nav>
+</header>
+
+<main class="container">
+    <section class="grid cards">
+        <div class="card">
+            <div class="metric">Shareholders</div>
+            <div class="metric-value" th:text="${shareholderCount}">0</div>
+        </div>
+        <div class="card">
+            <div class="metric">Transactions</div>
+            <div class="metric-value" th:text="${transactionCount}">0</div>
+        </div>
+        <div class="card">
+            <div class="metric">Shares Owned</div>
+            <div class="metric-value" th:text="${ownedShareCount}">0</div>
+        </div>
+        <div class="card">
+            <div class="metric">Gross Investment</div>
+            <div class="metric-value" th:text="${'INR ' + #numbers.formatDecimal(totalInvestment, 1, 'COMMA', 2, 'POINT')}">0</div>
+        </div>
+    </section>
+
+    <section class="grid two-column" style="margin-top: 20px;">
+        <div class="card">
+            <h2>Current Holdings</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Shareholder</th>
+                    <th>Symbol</th>
+                    <th>Owned</th>
+                    <th>Purchased</th>
+                    <th>Sold</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="holding : ${holdings}">
+                    <td th:text="${holding.shareholderName}">Anika Sharma</td>
+                    <td><span class="badge" th:text="${holding.symbol}">TCS</span></td>
+                    <td th:text="${holding.ownedQuantity}">20</td>
+                    <td th:text="${holding.purchasedQuantity}">25</td>
+                    <td th:text="${holding.soldQuantity}">5</td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(holdings)}">
+                    <td colspan="5">No holdings recorded yet.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Recent Transactions</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Shareholder</th>
+                    <th>Type</th>
+                    <th>Symbol</th>
+                    <th>Qty</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="transaction : ${recentTransactions}">
+                    <td th:text="${transaction.transactionDate}">2026-08-14</td>
+                    <td th:text="${transaction.shareholder.name}">Anika Sharma</td>
+                    <td th:text="${transaction.transactionType}">BUY</td>
+                    <td th:text="${transaction.symbol}">TCS</td>
+                    <td th:text="${transaction.quantity}">25</td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(recentTransactions)}">
+                    <td colspan="5">No transactions recorded yet.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+</body>
+</html>
