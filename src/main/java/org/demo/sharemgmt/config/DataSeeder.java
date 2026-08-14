@@ -2,9 +2,11 @@ package org.demo.sharemgmt.config;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import org.demo.sharemgmt.domain.UserRole;
 import org.demo.sharemgmt.domain.ShareTransaction;
 import org.demo.sharemgmt.domain.Shareholder;
 import org.demo.sharemgmt.domain.TransactionType;
+import org.demo.sharemgmt.service.AppUserService;
 import org.demo.sharemgmt.repository.ShareTransactionRepository;
 import org.demo.sharemgmt.repository.ShareholderRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -15,8 +17,18 @@ import org.springframework.context.annotation.Configuration;
 public class DataSeeder {
 
     @Bean
-    CommandLineRunner seedSampleData(ShareholderRepository shareholderRepository, ShareTransactionRepository shareTransactionRepository) {
+    CommandLineRunner seedSampleData(
+        AppUserService appUserService,
+        ShareholderRepository shareholderRepository,
+        ShareTransactionRepository shareTransactionRepository
+    ) {
         return args -> {
+            try {
+                appUserService.createUser("admin", "admin123", "System Administrator", UserRole.ADMIN);
+            } catch (IllegalArgumentException ignored) {
+                // User already exists in the current persistence context.
+            }
+
             if (shareholderRepository.count() > 0) {
                 return;
             }

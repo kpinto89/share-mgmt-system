@@ -16,6 +16,7 @@ A Spring Boot and Thymeleaf application for managing shareholders, recording buy
 - **Repository:** Spring Data repositories isolate persistence access.
 - **Service Layer:** business orchestration and portfolio rules live in services.
 - **Strategy + Factory:** buy and sell workflows use dedicated processors selected by transaction type.
+- **Facade:** authentication state is exposed through a dedicated facade instead of leaking Spring Security details into controllers and templates.
 
 ## Features
 
@@ -24,6 +25,7 @@ A Spring Boot and Thymeleaf application for managing shareholders, recording buy
 - Transaction ledger with buy/sell validation
 - Portfolio summaries derived from recorded transactions
 - Sample seed data for quick startup
+- Login and logout with Spring Security
 
 ## Run locally
 
@@ -32,3 +34,8 @@ gradlew.bat bootRun
 ```
 
 Open `http://localhost:8080` after startup.
+
+## Default login
+
+- Username: `admin`
+- Password: `admin123`

@@ -27,6 +27,19 @@ body {
     text-decoration: none;
 }
 
+.nav-links {
+    align-items: center;
+    display: flex;
+    gap: 12px;
+}
+
+.nav-user {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    font-size: 13px;
+    padding: 6px 12px;
+}
+
 .grid {
     display: grid;
     gap: 16px;
@@ -79,6 +92,12 @@ form {
     gap: 12px;
 }
 
+.inline-form {
+    display: inline-flex;
+    gap: 0;
+    margin: 0;
+}
+
 input,
 select,
 button {
@@ -101,6 +120,11 @@ button {
     font-size: 13px;
 }
 
+.success {
+    color: #047857;
+    font-size: 13px;
+}
+
 .badge {
     background: #dbeafe;
     border-radius: 999px;
@@ -108,6 +132,37 @@ button {
     display: inline-block;
     font-size: 12px;
     padding: 4px 10px;
+}
+
+.link-button {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: #ffffff;
+    padding: 8px 14px;
+}
+
+.auth-shell {
+    align-items: center;
+    display: flex;
+    min-height: 100vh;
+}
+
+.auth-card {
+    margin: 0 auto;
+    max-width: 420px;
+    width: 100%;
+}
+
+.muted {
+    color: #4f5d75;
+}
+
+.hint {
+    background: #eef3fb;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-top: 16px;
+    padding: 12px;
 }
 
 @media (max-width: 860px) {
