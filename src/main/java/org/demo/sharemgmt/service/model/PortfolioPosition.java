@@ -10,6 +10,11 @@ public class PortfolioPosition {
     private final int quantity;
     private final BigDecimal investedAmount;
     private final BigDecimal currentPrice;
+    private final BigDecimal previousClose;
+    private final BigDecimal priceChange;
+    private final BigDecimal priceChangePercent;
+    private final boolean livePrice;
+    private final String priceSource;
     private final BigDecimal marketValue;
     private final BigDecimal gainLoss;
     private final int gainLossPercentage;
@@ -21,6 +26,11 @@ public class PortfolioPosition {
         int quantity,
         BigDecimal investedAmount,
         BigDecimal currentPrice,
+        BigDecimal previousClose,
+        BigDecimal priceChange,
+        BigDecimal priceChangePercent,
+        boolean livePrice,
+        String priceSource,
         BigDecimal marketValue,
         BigDecimal gainLoss,
         int gainLossPercentage
@@ -31,6 +41,11 @@ public class PortfolioPosition {
         this.quantity = quantity;
         this.investedAmount = investedAmount;
         this.currentPrice = currentPrice;
+        this.previousClose = previousClose;
+        this.priceChange = priceChange;
+        this.priceChangePercent = priceChangePercent;
+        this.livePrice = livePrice;
+        this.priceSource = priceSource;
         this.marketValue = marketValue;
         this.gainLoss = gainLoss;
         this.gainLossPercentage = gainLossPercentage;
@@ -58,6 +73,26 @@ public class PortfolioPosition {
 
     public BigDecimal getCurrentPrice() {
         return currentPrice;
+    }
+
+    public BigDecimal getPreviousClose() {
+        return previousClose;
+    }
+
+    public BigDecimal getPriceChange() {
+        return priceChange;
+    }
+
+    public BigDecimal getPriceChangePercent() {
+        return priceChangePercent;
+    }
+
+    public boolean isLivePrice() {
+        return livePrice;
+    }
+
+    public String getPriceSource() {
+        return priceSource;
     }
 
     public BigDecimal getMarketValue() {

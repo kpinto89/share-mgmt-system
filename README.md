@@ -23,6 +23,7 @@ A Spring Boot and Thymeleaf application for managing shareholders, recording buy
 - Dashboard with portfolio metrics and recent activity
 - Dashboard charts for owned shares, investment allocation, and transaction activity
 - Dedicated stock portfolio page with market value and gain/loss analysis
+- Live Alpha Vantage quote tracking when `ALPHA_VANTAGE_API_KEY` is configured
 - Shareholder registration screen
 - Transaction ledger with buy/sell validation
 - Portfolio summaries derived from recorded transactions
@@ -41,3 +42,7 @@ Open `http://localhost:8080` after startup.
 
 - Username: `admin`
 - Password: `admin123`
+
+## Live stock quotes
+
+Set `ALPHA_VANTAGE_API_KEY` to enable live market data from Alpha Vantage. If it is not set, the app falls back to stored quote sources so the portfolio still renders.

@@ -41,6 +41,13 @@
         </div>
     </section>
 
+    <section class="card" style="margin-top: 20px;">
+        <div class="portfolio-note">
+            <span class="badge live-badge">Live tracking</span>
+            <span class="muted">Alpha Vantage is used when configured; otherwise the app falls back to stored quote sources.</span>
+        </div>
+    </section>
+
     <section class="grid two-column" style="margin-top: 20px;">
         <div class="card">
             <h2>Allocation by Symbol</h2>
@@ -83,7 +90,11 @@
                 <th>Shareholder</th>
                 <th>Symbol</th>
                 <th>Qty</th>
+                <th>Status</th>
                 <th>Current Price</th>
+                <th>Prev Close</th>
+                <th>Change</th>
+                <th>Change %</th>
                 <th>Invested</th>
                 <th>Market Value</th>
                 <th>Gain / Loss</th>
@@ -94,13 +105,20 @@
                 <td th:text="${position.shareholderName}">Anika Sharma</td>
                 <td><span class="badge" th:text="${position.symbol}">TCS</span></td>
                 <td th:text="${position.quantity}">20</td>
+                <td>
+                    <span class="badge live-badge" th:if="${position.livePrice}">LIVE</span>
+                    <span class="badge fallback-badge" th:if="${!position.livePrice}">FALLBACK</span>
+                </td>
                 <td th:text="${'INR ' + #numbers.formatDecimal(position.currentPrice, 1, 'COMMA', 2, 'POINT')}">INR 0.00</td>
+                <td th:text="${'INR ' + #numbers.formatDecimal(position.previousClose, 1, 'COMMA', 2, 'POINT')}">INR 0.00</td>
+                <td th:classappend="${position.priceChange.signum() >= 0} ? 'gain' : 'loss'" th:text="${(position.priceChange.signum() >= 0 ? '+' : '') + 'INR ' + #numbers.formatDecimal(position.priceChange, 1, 'COMMA', 2, 'POINT')}">INR 0.00</td>
+                <td th:classappend="${position.priceChangePercent.signum() >= 0} ? 'gain' : 'loss'" th:text="${(position.priceChangePercent.signum() >= 0 ? '+' : '') + #numbers.formatDecimal(position.priceChangePercent, 1, 'COMMA', 2, 'POINT') + '%'}">0.00%</td>
                 <td th:text="${'INR ' + #numbers.formatDecimal(position.investedAmount, 1, 'COMMA', 2, 'POINT')}">INR 0.00</td>
                 <td th:text="${'INR ' + #numbers.formatDecimal(position.marketValue, 1, 'COMMA', 2, 'POINT')}">INR 0.00</td>
                 <td th:classappend="${position.gainLoss.signum() >= 0} ? 'gain' : 'loss'" th:text="${'INR ' + #numbers.formatDecimal(position.gainLoss, 1, 'COMMA', 2, 'POINT')}">INR 0.00</td>
             </tr>
             <tr th:if="${#lists.isEmpty(portfolio.positions)}">
-                <td colspan="7">No active positions yet.</td>
+                <td colspan="11">No active positions yet.</td>
             </tr>
             </tbody>
         </table>

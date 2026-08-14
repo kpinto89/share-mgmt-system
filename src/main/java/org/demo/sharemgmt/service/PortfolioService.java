@@ -11,6 +11,7 @@ import org.demo.sharemgmt.domain.ShareTransaction;
 import org.demo.sharemgmt.domain.TransactionType;
 import org.demo.sharemgmt.repository.ShareTransactionRepository;
 import org.demo.sharemgmt.service.model.ChartBarItem;
+import org.demo.sharemgmt.service.model.LiveStockQuote;
 import org.demo.sharemgmt.service.model.HoldingSummary;
 import org.demo.sharemgmt.service.model.PortfolioPosition;
 import org.demo.sharemgmt.service.model.PortfolioSummary;
@@ -105,7 +106,8 @@ public class PortfolioService {
                 continue;
             }
 
-            BigDecimal currentPrice = marketPriceService.getCurrentPrice(holding.getSymbol());
+            LiveStockQuote quote = marketPriceService.getQuote(holding.getSymbol());
+            BigDecimal currentPrice = quote.getCurrentPrice();
             BigDecimal marketValue = currentPrice.multiply(BigDecimal.valueOf(holding.getOwnedQuantity()));
             BigDecimal netInvested = holding.getInvestedAmount().subtract(holding.getRealizedAmount());
             BigDecimal gainLoss = marketValue.subtract(netInvested);
@@ -117,6 +119,11 @@ public class PortfolioService {
                     holding.getOwnedQuantity(),
                     netInvested,
                     currentPrice,
+                    quote.getPreviousClose(),
+                    quote.getChange(),
+                    quote.getChangePercent(),
+                    quote.isLive(),
+                    quote.getSource(),
                     marketValue,
                     gainLoss,
                     percentage(gainLoss, netInvested)
