@@ -165,6 +165,95 @@ button {
     padding: 12px;
 }
 
+.chart-list {
+    display: grid;
+    gap: 16px;
+}
+
+.chart-row {
+    display: grid;
+    gap: 8px;
+}
+
+.chart-label-group {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.chart-label {
+    font-weight: 600;
+}
+
+.chart-value {
+    color: #4f5d75;
+    font-size: 13px;
+}
+
+.chart-track {
+    background: #eef3fb;
+    border-radius: 999px;
+    height: 14px;
+    overflow: hidden;
+}
+
+.chart-fill {
+    border-radius: 999px;
+    height: 100%;
+    min-width: 8px;
+}
+
+.symbol-fill {
+    background: linear-gradient(90deg, #2563eb, #60a5fa);
+}
+
+.investment-fill {
+    background: linear-gradient(90deg, #0f766e, #34d399);
+}
+
+.activity-chart {
+    align-items: end;
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    min-height: 220px;
+}
+
+.activity-column {
+    align-items: center;
+    display: grid;
+    gap: 8px;
+    justify-items: center;
+}
+
+.activity-count {
+    color: #4f5d75;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.activity-bar-shell {
+    align-items: end;
+    background: linear-gradient(180deg, #f8fafc, #eef3fb);
+    border-radius: 12px;
+    display: flex;
+    height: 150px;
+    padding: 8px;
+    width: 100%;
+}
+
+.activity-bar {
+    background: linear-gradient(180deg, #7c3aed, #2563eb);
+    border-radius: 8px 8px 4px 4px;
+    width: 100%;
+}
+
+.activity-label {
+    color: #4f5d75;
+    font-size: 12px;
+}
+
 @media (max-width: 860px) {
     .grid.two-column {
         grid-template-columns: 1fr;

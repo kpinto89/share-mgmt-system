@@ -42,6 +42,54 @@
 
     <section class="grid two-column" style="margin-top: 20px;">
         <div class="card">
+            <h2>Owned Shares by Symbol</h2>
+            <div class="chart-list">
+                <div class="chart-row" th:each="item : ${analytics.ownedSharesBySymbol}">
+                    <div class="chart-label-group">
+                        <span class="chart-label" th:text="${item.label}">TCS</span>
+                        <span class="chart-value" th:text="${item.displayValue}">20 shares</span>
+                    </div>
+                    <div class="chart-track">
+                        <div class="chart-fill symbol-fill" th:style="'width:' + ${item.percentage} + '%'"></div>
+                    </div>
+                </div>
+                <p class="muted" th:if="${#lists.isEmpty(analytics.ownedSharesBySymbol)}">No holding data available yet.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Investment by Shareholder</h2>
+            <div class="chart-list">
+                <div class="chart-row" th:each="item : ${analytics.investmentByShareholder}">
+                    <div class="chart-label-group">
+                        <span class="chart-label" th:text="${item.label}">Anika Sharma</span>
+                        <span class="chart-value" th:text="${item.displayValue}">INR 91,250.00</span>
+                    </div>
+                    <div class="chart-track">
+                        <div class="chart-fill investment-fill" th:style="'width:' + ${item.percentage} + '%'"></div>
+                    </div>
+                </div>
+                <p class="muted" th:if="${#lists.isEmpty(analytics.investmentByShareholder)}">No investment data available yet.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="card" style="margin-top: 20px;">
+        <h2>Transaction Activity</h2>
+        <div class="activity-chart">
+            <div class="activity-column" th:each="item : ${analytics.transactionActivity}">
+                <div class="activity-count" th:text="${item.count}">2</div>
+                <div class="activity-bar-shell">
+                    <div class="activity-bar" th:style="'height:' + ${item.heightPercentage} + '%'"></div>
+                </div>
+                <div class="activity-label" th:text="${item.label}">14 Aug</div>
+            </div>
+            <p class="muted" th:if="${#lists.isEmpty(analytics.transactionActivity)}">No transaction activity available yet.</p>
+        </div>
+    </section>
+
+    <section class="grid two-column" style="margin-top: 20px;">
+        <div class="card">
             <h2>Current Holdings</h2>
             <table>
                 <thead>

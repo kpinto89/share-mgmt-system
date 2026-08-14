@@ -21,6 +21,7 @@ A Spring Boot and Thymeleaf application for managing shareholders, recording buy
 ## Features
 
 - Dashboard with portfolio metrics and recent activity
+- Dashboard charts for owned shares, investment allocation, and transaction activity
 - Shareholder registration screen
 - Transaction ledger with buy/sell validation
 - Portfolio summaries derived from recorded transactions
